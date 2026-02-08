@@ -1,16 +1,14 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
-import { createClient } from "@libsql/client";
 
 function createPrismaClient() {
   const url = process.env.DATABASE_URL || "file:./dev.db";
 
-  // Always use libSQL adapter (works for both Turso and local libsql)
-  const libsql = createClient({
+  // PrismaLibSql takes config directly in Prisma 7
+  const adapter = new PrismaLibSql({
     url,
     authToken: process.env.TURSO_AUTH_TOKEN,
   });
-  const adapter = new PrismaLibSql(libsql);
   return new PrismaClient({ adapter });
 }
 
