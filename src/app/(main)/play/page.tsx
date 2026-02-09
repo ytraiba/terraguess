@@ -40,21 +40,21 @@ export default function PlayPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-57px)] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-4 py-12">
-      <div className="mx-auto max-w-2xl">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white">
+    <div className="min-h-[calc(100vh-57px)] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 px-4 py-8 sm:py-12">
+      <div className="mx-auto max-w-2xl lg:max-w-3xl">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
             Choose Your{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
               Mission
             </span>
           </h1>
-          <p className="mt-3 text-indigo-200/70">
+          <p className="mt-2 sm:mt-3 text-sm sm:text-base text-indigo-200/70">
             Select a game mode and begin your exploration
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {modes.map((mode) => {
             const config = GAME_MODE_CONFIG[mode];
             const isSelected = selectedMode === mode;
@@ -63,16 +63,16 @@ export default function PlayPage() {
               <button
                 key={mode}
                 onClick={() => setSelectedMode(mode)}
-                className={`w-full rounded-xl border-2 p-6 text-left transition-all duration-200 ${
+                className={`w-full rounded-xl border-2 p-4 sm:p-6 text-left transition-all duration-200 ${
                   isSelected
                     ? "border-indigo-500 bg-indigo-500/20 shadow-lg shadow-indigo-500/20"
                     : "border-slate-700 bg-slate-800/50 hover:border-indigo-500/50 hover:bg-slate-800"
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <div
-                      className={`text-3xl w-14 h-14 flex items-center justify-center rounded-xl ${
+                      className={`text-2xl sm:text-3xl w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-xl flex-shrink-0 ${
                         isSelected
                           ? "bg-indigo-500/30"
                           : "bg-slate-700/50"
@@ -80,19 +80,19 @@ export default function PlayPage() {
                     >
                       {modeIcons[mode]}
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">
+                    <div className="min-w-0">
+                      <h3 className="text-base sm:text-lg font-semibold text-white">
                         {config.label}
                       </h3>
-                      <p className="mt-1 text-sm text-indigo-200/60">
+                      <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-indigo-200/60">
                         {config.description}
                       </p>
                     </div>
                   </div>
                   {isSelected && (
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center flex-shrink-0">
                       <svg
-                        className="w-4 h-4 text-white"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -113,7 +113,7 @@ export default function PlayPage() {
         </div>
 
         {error && (
-          <div className="mt-6 rounded-xl bg-red-500/10 border border-red-500/30 p-4 text-sm text-red-400">
+          <div className="mt-5 sm:mt-6 rounded-xl bg-red-500/10 border border-red-500/30 p-4 text-sm text-red-400">
             {error}
           </div>
         )}
@@ -121,7 +121,7 @@ export default function PlayPage() {
         <button
           onClick={handleStart}
           disabled={loading}
-          className="mt-8 w-full group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-4 text-lg font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          className="mt-6 sm:mt-8 w-full group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-3 sm:py-4 text-base sm:text-lg font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
         >
           <span className="relative z-10">
             {loading ? (
