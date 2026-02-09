@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
+  useMap,
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
@@ -17,6 +18,12 @@ const guessIcon = L.divIcon({
   iconSize: [24, 24],
   iconAnchor: [12, 12],
 });
+
+// World bounds to prevent panning into white space
+const WORLD_BOUNDS = L.latLngBounds(
+  L.latLng(-85, -180),
+  L.latLng(85, 180)
+);
 
 interface GuessMapProps {
   onGuessPlaced: (lat: number, lng: number) => void;
@@ -38,6 +45,32 @@ function ClickHandler({
       }
     },
   });
+  return null;
+}
+
+// Handles container resize so Leaflet reloads tiles correctly
+function MapResizer({ isExpanded }: { isExpanded: boolean }) {
+  const map = useMap();
+
+  useEffect(() => {
+    // invalidateSize after CSS transition finishes (300ms)
+    const timeout = setTimeout(() => {
+      map.invalidateSize();
+    }, 350);
+
+    // Also do it immediately for good measure
+    map.invalidateSize();
+
+    return () => clearTimeout(timeout);
+  }, [isExpanded, map]);
+
+  // Also handle window resize
+  useEffect(() => {
+    const handleResize = () => map.invalidateSize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [map]);
+
   return null;
 }
 
@@ -93,15 +126,21 @@ export default function GuessMap({
 
         <MapContainer
           center={[20, 0]}
-          zoom={1}
-          style={{ width: "100%", height: "100%" }}
-          zoomControl={isExpanded}
+          zoom={2}
+          minZoom={2}
+          maxBounds={WORLD_BOUNDS}
+          maxBoundsViscosity={1.0}
+          worldCopyJump={true}
+          style={{ width: "100%", height: "100%", background: "#0f172a" }}
+          zoomControl={false}
           attributionControl={false}
         >
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            noWrap={false}
           />
+          <MapResizer isExpanded={isExpanded} />
           <ClickHandler onGuessPlaced={handleGuess} disabled={disabled || !isExpanded} />
           {guessPosition && (
             <Marker
