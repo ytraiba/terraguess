@@ -1,16 +1,5 @@
 import { z } from "zod";
 
-export const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-export const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
-
 export const createGameSchema = z.object({
   mode: z.enum(["classic", "timed", "no-move"]),
 });
@@ -21,7 +10,5 @@ export const submitGuessSchema = z.object({
   timeSpent: z.number().int().min(0),
 });
 
-export type RegisterInput = z.infer<typeof registerSchema>;
-export type LoginInput = z.infer<typeof loginSchema>;
 export type CreateGameInput = z.infer<typeof createGameSchema>;
 export type SubmitGuessInput = z.infer<typeof submitGuessSchema>;

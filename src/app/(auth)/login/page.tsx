@@ -16,15 +16,12 @@ export default function LoginPage() {
             </h1>
           </Link>
           <p className="mt-2 text-sm text-indigo-200/70">
-            Welcome back, explorer
+            Sign in to start exploring
           </p>
         </div>
         <LoginForm />
-        <p className="text-center text-sm text-indigo-200/60">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
-            Register
-          </Link>
+        <p className="text-center text-xs text-indigo-200/40">
+          By signing in, you agree to let TerraGuess access your name and email from your account.
         </p>
       </div>
     </div>

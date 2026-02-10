@@ -36,19 +36,13 @@ export default function HomePage() {
           Guess locations from street-level imagery. The closer you are, the higher your score.
         </p>
 
-        <div className="mt-10 flex justify-center gap-4">
+        <div className="mt-10 flex justify-center">
           <Link
             href="/login"
-            className="group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all duration-200"
+            className="group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-10 py-4 text-lg font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all duration-200"
           >
-            <span className="relative z-10">Sign In</span>
+            <span className="relative z-10">Get Started</span>
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity" />
-          </Link>
-          <Link
-            href="/register"
-            className="rounded-xl border-2 border-indigo-500/50 px-8 py-4 text-lg font-bold text-indigo-300 hover:bg-indigo-500/10 hover:border-indigo-400/50 transition-all duration-200"
-          >
-            Register
           </Link>
         </div>
 
