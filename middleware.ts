@@ -23,5 +23,7 @@ export const config = {
     "/game/:path*",
     "/results/:path*",
     "/profile/:path*",
+    "/multiplayer/:path*",
+    "/room/:path*",
   ],
 };

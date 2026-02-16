@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { GAME_MODE_CONFIG, type GameMode } from "@/types/game";
 
 const modes: GameMode[] = ["classic", "timed", "no-move"];
@@ -150,6 +151,26 @@ export default function PlayPage() {
           </span>
           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-400 to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity" />
         </button>
+
+        {/* Multiplayer CTA */}
+        <div className="mt-6 sm:mt-8 text-center">
+          <div className="inline-flex items-center gap-2 text-indigo-300/50 text-sm mb-3">
+            <div className="w-12 h-px bg-indigo-500/20" />
+            or
+            <div className="w-12 h-px bg-indigo-500/20" />
+          </div>
+          <div>
+            <Link
+              href="/multiplayer"
+              className="inline-flex items-center gap-2 rounded-xl border border-indigo-500/30 bg-slate-800/50 px-6 py-3 text-sm font-medium text-indigo-300 hover:bg-slate-800 hover:border-indigo-500/50 transition-all"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              Challenge Friends — Multiplayer
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

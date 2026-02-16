@@ -28,6 +28,10 @@ model User {
   sessions Session[]
   games    Game[]
 
+  // Multiplayer
+  hostedRooms GameRoom[]     @relation("HostedRooms")
+  roomPlayers PlayerInRoom[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -110,6 +114,79 @@ model Round {
 
   @@unique([gameId, roundNumber])
   @@index([gameId])
+}
+
+// Multiplayer models
+
+model GameRoom {
+  id             String    @id @default(cuid())
+  code           String    @unique
+  hostId         String
+  status         String    @default("waiting")
+  mode           String    @default("classic")
+  timeLimit      Int       @default(90)
+  maxPlayers     Int       @default(4)
+  currentRound   Int       @default(0)
+  roundStartedAt DateTime?
+
+  host    User           @relation("HostedRooms", fields: [hostId], references: [id])
+  players PlayerInRoom[]
+  rounds  RoomRound[]
+
+  createdAt DateTime @default(now())
+
+  @@index([code])
+  @@index([status])
+}
+
+model PlayerInRoom {
+  id         String @id @default(cuid())
+  roomId     String
+  userId     String
+  totalScore Int    @default(0)
+
+  room    GameRoom    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guesses RoomGuess[]
+
+  joinedAt DateTime @default(now())
+
+  @@unique([roomId, userId])
+  @@index([roomId])
+}
+
+model RoomRound {
+  id          String @id @default(cuid())
+  roomId      String
+  roundNumber Int
+  actualLat   Float
+  actualLng   Float
+  imageId     String
+
+  room    GameRoom    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  guesses RoomGuess[]
+
+  @@unique([roomId, roundNumber])
+  @@index([roomId])
+}
+
+model RoomGuess {
+  id        String   @id @default(cuid())
+  roundId   String
+  playerId  String
+  guessLat  Float
+  guessLng  Float
+  distance  Float
+  score     Int
+  timeSpent Int
+  guessedAt DateTime @default(now())
+
+  round  RoomRound    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  player PlayerInRoom @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([roundId, playerId])
+  @@index([roundId])
+  @@index([playerId])
 }
 
 model Location {

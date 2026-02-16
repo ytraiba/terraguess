@@ -10,6 +10,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/play", label: "Play" },
+    { href: "/multiplayer", label: "Multiplayer" },
     { href: "/leaderboard", label: "Leaderboard" },
     { href: "/profile", label: "Profile" },
   ];
